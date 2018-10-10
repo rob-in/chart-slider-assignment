@@ -31,15 +31,7 @@
 
     @include lg {
       width: 34%;
+      margin: 0;
     }
   }
 }
-
-// @include sm {
-//     width: 100%;
-//   }
-
-//   @include lg {
-//     min-width: 72%;
-//     max-width: calc(100% - 270px);
-//   }
