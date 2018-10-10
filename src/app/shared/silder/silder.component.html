@@ -1,0 +1,5 @@
+<div class="slider-container">
+  <div class="slider" *ngIf="config">
+      <nouislider [config]="config" [(ngModel)]="selectionRange" (ngModelChange)="onChange($event)"></nouislider>
+  </div>
+</div>
