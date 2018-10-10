@@ -3,6 +3,6 @@
     <app-bar-chart *ngIf="chartData" [data]="chartData"></app-bar-chart>
   </div>
   <div class="side-panel">
-    <app-silder [config]="sliderConfig"></app-silder>
+    <app-silder [config]="sliderConfig" (selectionChange)="onSliderSelectionChange($event)"></app-silder>
   </div>
 </div>

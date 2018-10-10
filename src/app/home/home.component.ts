@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
-
 import { QuoteService } from './quote.service';
 import { SliderConfig } from '@app/shared/silder/slider.model';
 import { HOME_CONFIG } from './home.config';
+import { Observable } from 'rxjs';
+import { Home } from './home.model';
+
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,8 @@ import { HOME_CONFIG } from './home.config';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  private _home: Observable<Home>;
+
   public chartData: Array<any>;
   public sliderConfig: SliderConfig;
   private _config = HOME_CONFIG;
@@ -27,12 +30,11 @@ export class HomeComponent implements OnInit {
     this._dataFromAPI.sort((a, b) => b - a); // For descending sort
     this._generateChartData();
     this._getSliderConfig();
+  }
 
-    // setTimeout(() => {
-    //   // change the data periodically
-    //   this._activeActivityRange = [2, 5];
-    //   setInterval(() => this._generateChartData(), 3000);
-    // }, 5000);
+  onSliderSelectionChange(event: Array<number>) {
+    this._activeActivityRange = event;
+    this._generateChartData();
   }
 
   private _generateChartData() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SliderConfig } from './slider.model';
 
 @Component({
@@ -9,6 +9,9 @@ import { SliderConfig } from './slider.model';
 export class SilderComponent implements OnInit {
   @Input()
   config: SliderConfig;
+  @Output()
+  selectionChange = new EventEmitter<Array<number>>();
+
   selectionRange: number[];
 
   constructor() {}
@@ -17,7 +20,7 @@ export class SilderComponent implements OnInit {
     this.selectionRange = this.config.selectionRange;
   }
 
-  onChange(event: any) {
-    console.log({ event });
+  onChange(event: Array<number>) {
+    this.selectionChange.emit(event);
   }
 }
