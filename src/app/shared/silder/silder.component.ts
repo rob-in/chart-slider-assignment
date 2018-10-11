@@ -21,6 +21,7 @@ export class SilderComponent implements OnInit {
   }
 
   onChange(event: Array<number>) {
+    this.selectionRange = event;
     this.selectionChange.emit(event);
   }
 }
