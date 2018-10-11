@@ -4,28 +4,25 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 const routes = {
-  quote: (c: RandomQuoteContext) => `/jokes/random?category=${c.category}`
+  chartData: () => '/chartData'
 };
 
-export interface RandomQuoteContext {
-  // The quote's category: 'dev', 'explicit'...
-  category: string;
-}
-
 @Injectable()
-export class QuoteService {
+export class HomeService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getRandomQuote(context: RandomQuoteContext): Observable<string> {
-    return this.httpClient
-      .cache()
-      .get(routes.quote(context))
-      .pipe(
-        map((body: any) => body.value),
-        catchError(() => of('Error, could not load joke :-('))
-      );
-  }
+  // TODO: We can use MOCK API call to fetch chart data instead of hardcoding in component
+
+  // getChartDataFromAPI(): Observable<string> {
+  //   return this.httpClient
+  //     .cache()
+  //     .get(routes.chartData())
+  //     .pipe(
+  //       map((body: any) => body.value),
+  //       catchError(() => of('Error, could not load chartData :-('))
+  //     );
+  // }
 
   generateChartData(dataObj: Array<number>, activeActivityRange: Array<number>): any {
     const _chartData: any = [];

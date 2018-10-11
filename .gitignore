@@ -6,3 +6,4 @@ node_modules
 
 # Ignore dist and public folder for all the projects
 dist/*
+reports/*
