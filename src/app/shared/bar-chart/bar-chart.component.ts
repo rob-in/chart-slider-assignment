@@ -9,10 +9,10 @@ import { BAR_CHART_CONFIG } from './bar-chart.config';
   encapsulation: ViewEncapsulation.None
 })
 export class BarChartComponent implements OnInit, OnChanges {
+  @Input()
+  public data: Array<any>;
   @ViewChild('chart')
   private chartContainer: ElementRef;
-  @Input()
-  private data: Array<any>;
   private _config = BAR_CHART_CONFIG;
   private margin: any = this._config.chartConfig.margin;
   private chart: any;
