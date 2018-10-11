@@ -3,8 +3,8 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppState } from './../app.state';
-import * as HomeActions from '../store/actions/home/home.action';
-import * as HomeReducers from '../store/reducers/home/home.reducers';
+import * as HomeActions from '../core/store/actions/home/home.action';
+import * as HomeReducers from '../core/store/reducers/home/home.reducers';
 import { SliderConfig } from '@app/shared/silder/slider.model';
 import { HomeService } from './home.service';
 import { HOME_CONFIG } from './home.config';

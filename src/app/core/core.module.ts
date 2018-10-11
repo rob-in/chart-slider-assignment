@@ -17,6 +17,8 @@ import { HttpCacheService } from './http/http-cache.service';
 import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { CacheInterceptor } from './http/cache.interceptor';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './store/reducers/home/home.reducers';
 
 @NgModule({
   imports: [
@@ -25,7 +27,10 @@ import { CacheInterceptor } from './http/cache.interceptor';
     TranslateModule,
     FlexLayoutModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    StoreModule.forRoot({
+      home: reducer
+    })
   ],
   declarations: [
     HeaderComponent,
