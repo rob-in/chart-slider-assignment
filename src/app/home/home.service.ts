@@ -9,8 +9,7 @@ const routes = {
 
 @Injectable()
 export class HomeService {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   // TODO: We can use MOCK API call to fetch chart data instead of hardcoding in component
 
@@ -24,16 +23,23 @@ export class HomeService {
   //     );
   // }
 
-  generateChartData(dataObj: Array<number>, activeActivityRange: Array<number>): any {
+  generateChartData(
+    dataObj: Array<number>,
+    activeActivityRange?: Array<number>
+  ): any {
     const _chartData: any = [];
     dataObj.forEach((dataValue, i) => {
+
+      const activityState: boolean = activeActivityRange
+        ? i + 1 >= activeActivityRange[0] && i + 1 <= activeActivityRange[1]
+        : false; // if there are not activity selection present by default all the activities will be active
+
       _chartData.push([
         `Activity ${i + 1}`,
         dataValue,
-        ((i + 1) >= activeActivityRange[0] && (i + 1) <= activeActivityRange[1])
+        activityState
       ]);
     });
     return _chartData;
   }
-
 }

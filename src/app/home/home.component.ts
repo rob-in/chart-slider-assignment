@@ -15,12 +15,13 @@ import { HOME_CONFIG } from './home.config';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  private _home$: Observable<any>;
   public chartData: Array<any>;
   public sliderConfig: SliderConfig;
+  public activeActivityRange: Array<number> = [];
+  public dataFromAPI: Array<number> = [];
+
+  private _home$: Observable<any>;
   private _config = HOME_CONFIG;
-  private _dataFromAPI: Array<number> = [];
-  private _activeActivityRange: Array<number> = [];
 
   constructor(
     private _homeService: HomeService,
@@ -31,28 +32,28 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._dataFromAPI = [84, 14, 234, 37, 64, 42, 197, 11]; // In real time scenario this data will come from API.
-    if (!this._activeActivityRange.length) {
-      this._activeActivityRange = [1, this._dataFromAPI.length];
+    this.dataFromAPI = [84, 14, 234, 37, 64, 42, 197, 11]; // In real time scenario this data will come from API.
+    if (!this.activeActivityRange.length) {
+      this.activeActivityRange = [1, this.dataFromAPI.length];
     }
     // By default all the activites are slected and slider will show whole range selected
 
-    this._dataFromAPI.sort((a, b) => b - a); // For descending sort
-    this._store.dispatch(new HomeActions.AddChartData(this._dataFromAPI));
+    this.dataFromAPI.sort((a, b) => b - a); // For descending sort
+    this._store.dispatch(new HomeActions.AddChartData(this.dataFromAPI));
     this._getSliderConfig();
   }
 
   onSliderSelectionChange(event: Array<number>) {
-    this._activeActivityRange = event;
+    this.activeActivityRange = event;
     this._store.dispatch(
-      new HomeActions.AddActivitySelection(this._activeActivityRange)
+      new HomeActions.AddActivitySelection(this.activeActivityRange)
     );
   }
 
   private _generateChartData() {
     this.chartData = this._homeService.generateChartData(
-      this._dataFromAPI,
-      this._activeActivityRange
+      this.dataFromAPI,
+      this.activeActivityRange
     );
   }
 
@@ -64,9 +65,9 @@ export class HomeComponent implements OnInit {
       {
         range: {
           min: 1,
-          max: this._dataFromAPI.length
+          max: this.dataFromAPI.length
         },
-        selectionRange: this._activeActivityRange
+        selectionRange: this.activeActivityRange
       },
       this._config.sliderConfig
     );
@@ -78,7 +79,7 @@ export class HomeComponent implements OnInit {
       .pipe(select(HomeReducers.getChartData));
     this._home$.subscribe(chartData => {
       if (chartData.length) {
-        this._dataFromAPI = chartData;
+        this.dataFromAPI = chartData;
         this._generateChartData();
       }
     });
@@ -90,7 +91,7 @@ export class HomeComponent implements OnInit {
       .pipe(select(HomeReducers.getActivitiesSelectionData));
     this._home$.subscribe(activitiesSelectionData => {
       if (activitiesSelectionData.length) {
-        this._activeActivityRange = activitiesSelectionData;
+        this.activeActivityRange = activitiesSelectionData;
         this._generateChartData();
       }
     });
